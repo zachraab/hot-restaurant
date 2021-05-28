@@ -10,6 +10,8 @@ An app that helps to schedule reservation requests and after 5 tables have been 
 - [Usage Information](#Usage-Information)
 - [Links](#links)
 
+![Screenshot](./images/screenshot.png)
+
 ## Installation Instructions
 
 Run the command `npm i` to install all necessary package depencies.
