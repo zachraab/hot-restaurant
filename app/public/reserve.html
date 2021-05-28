@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hot Restaurant - Express</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron text-center">
+        <h1>Hot Restaurant</h1>
+        <h3>We're pretty busy, so get comfortable!</h3>
+        <hr />
+        <a href="/tables">
+          <button class="btn btn-primary btn-lg">
+            <span class="fa fa-eye"></span> View Available Tables
+          </button>
+        </a>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3><strong>Make a Reservation</strong></h3>
+            </div>
+            <div class="card-body">
+              <form method="POST" role="form">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="reserve-name" />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" id="reserve-email" />
+                </div>
+
+                <div class="form-group">
+                  <label for="reserve-phone">Phone Number</label>
+                  <input type="text" class="form-control" id="reserve-phone" />
+                </div>
+
+                <div class="form-group">
+                  <label for="reserve-uniqueid">Unique ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="reserve-uniqueid"
+                  />
+                </div>
+                <div class="text-right">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-md"
+                    id="reserve-btn"
+                  >
+                    <span class="fa fa-fire"></span> Submit
+                  </button>
+                </div>
+              </form>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $("#reserve-btn").on("click", (e) => {
+        e.preventDefault();
+        let newReservation = {
+          customerName: $("#reserve-name").val().trim(),
+          phoneNumber: $("#reserve-phone").val().trim(),
+          customerEmail: $("#reserve-email").val().trim(),
+          customerID: $("#reserve-uniqueid").val().trim(),
+        };
+
+        console.log(newReservation);
+
+        let currentURL = window.location.origin;
+
+        $.post(currentURL + "/api/tables", newReservation, (data) => {
+          if (data == true) {
+            alert("You have successfully booked your reservation!");
+          }
+          if (data == false) {
+            alert(
+              "Unfortunately, we do not currently have any available tables so you are on the waitlist."
+            );
+          }
+
+          $("#reserve-name").val("");
+          $("#reserve-phone").val("");
+          $("#reserve-email").val("");
+          $("#reserve-uniqueid").val("");
+        });
+
+        return false;
+      });
+    </script>
+  </body>
+</html>
